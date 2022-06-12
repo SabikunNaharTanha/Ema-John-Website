@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getStoreCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
@@ -11,13 +12,43 @@ const Shop = () => {
         fetch('products.json')
             .then(res => res.json())
             .then(data => setProducts(data))
-
-
     }, []);
-    const handleAddToCart = (product) => {
-        console.log(product);
-        const newCart = [...cart, product];   //copy previous value of the cart array and add the new value "product"
+
+    // To store the data in the local-storage previously clicked by the user.
+    useEffect(() => {
+        const storedCart = getStoreCart();
+        const savedCart = [];
+
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if (addedProduct) {
+                const quantity = storedCart[id];
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
+            }
+        }
+
+        setCart(savedCart);
+
+    }, [products])
+
+    const handleAddToCart = (selectedProduct) => {
+        // console.log(product);
+        let newCart = [];
+        const exists = cart.find(product => product.id === selectedProduct.id);
+        if (!exists) {
+            selectedProduct.quantity = 1;
+            newCart = [...cart, selectedProduct];
+        }
+        else {
+            const rest = cart.filter(product => product.id !== selectedProduct.id);
+            exists.quantity = exists.quantity + 1;
+            newCart = [...rest, exists];
+        }
+
+        // const newCart = [...cart, selectedProduct];   //copy previous value of the cart array and add the new value "product"
         setCart(newCart);
+        addToDb(selectedProduct.id)
     }
 
 
