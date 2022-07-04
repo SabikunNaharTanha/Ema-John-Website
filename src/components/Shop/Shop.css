@@ -15,6 +15,17 @@
 
 }
 
+.review-button {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: #FF9900;
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 700;
+    width: 100%;
+}
+
 @media screen and (max-width:1100px) {
     .products-container {
         grid-template-columns: repeat(2, 1fr);

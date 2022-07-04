@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import useProducts from '../../Hooks/useProducts';
 import { addToDb, getStoreCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
+import { Link } from 'react-router-dom';
 
 const Shop = () => {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useProducts();
     const [cart, setCart] = useState([]);
-
-    useEffect(() => {
-        fetch('products.json')
-            .then(res => res.json())
-            .then(data => setProducts(data))
-    }, []);
 
     // To store the data in the local-storage previously clicked by the user.
     useEffect(() => {
@@ -64,7 +60,11 @@ const Shop = () => {
                 }
             </div>
             <div className="cart-container">
-                <Cart cart={cart}></Cart>
+                <Cart cart={cart}>
+                    <Link to='/orders'>
+                        <button className='review-button'>Review Order</button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );
