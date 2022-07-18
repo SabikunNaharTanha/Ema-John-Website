@@ -46,9 +46,22 @@
     border-radius: 5px;
     border: none;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.form-submit:hover {
+    background-color: rgba(255, 153, 0, 0.781);
 }
 
 .form-link {
     color: rgba(255, 153, 0, 1);
     text-decoration: none;
+}
+
+.fancy-or {
+    border-left: 1px solid rgba(149, 160, 167, 1);
+    margin: 10px;
+    width: 200px;
+
+
 }
